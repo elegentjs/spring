@@ -1,4 +1,4 @@
-package win.elegentjs.spring;
+package win.elegentjs.spring.util;
 
 public class ArraysUtil {
 

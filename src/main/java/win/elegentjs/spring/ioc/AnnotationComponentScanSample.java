@@ -3,8 +3,8 @@ package win.elegentjs.spring.ioc;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import win.elegentjs.spring.ArraysUtil;
 import win.elegentjs.spring.ioc.config.PersonConfig;
+import win.elegentjs.spring.util.ArraysUtil;
 
 /**
  * 基于Annotation配置componentScan方式加载bean
