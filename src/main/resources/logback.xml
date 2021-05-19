@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ scan属性：默认为true,Logback将会扫描配置文件，如果配置文件发生改变时，会自动加载
+ scanPeriod:Logback扫描配置文件时间间隔，默认单位为毫秒，可配置单位为毫秒、秒、分、时 milliseconds, seconds, minutes or hours
+ debug：默认为false,是否打印Logback内部信息，当为true时可以查看Logback的运行信息
+ packagingData：默认false,在打印异常堆栈时是否打印相关包信息
+-->
+<configuration
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://www.padual.com/java/logback.xsd"
+        scan="true" scanPeriod="60 seconds" debug="false" packagingData="true">
+    <!--配置logger上下文名称，默认名称为default,用于区分不同应用程序的日志记录-->
+    <contextName>logback</contextName>
+
+    <!-- 文件保留时间(天) -->
+    <property name="log.maxHistory" value="30" />
+    <!-- 日志最大大小(单位G) -->
+    <property name="log.maxSize" value="10GB" />
+    <!-- 日志输出编码 -->
+    <property name="log.encode" value="UTF-8" />
+    <!-- 日志存储路径 -->
+    <property name="log.filePath" value="logs" />
+    <!-- 日志的显式格式 -->
+    <property name="log.pattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50}-%msg%n"/>
+
+    <!--获取时间戳字符串 key为名称  datePattern为将解析配置文件的时间作为当前时间格式化的标准-->
+    <timestamp key="bySecond" datePattern="yyyyMMdd'T'HHmmss"/>
+
+    <!-- consoleAppender：控制台输出 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoder:对日志日期格式化,类似于layout，除了将时间转化为数组，还会将转换后的数组输出到相应的文件中 -->
+        <encoder>
+            <!-- 定义日志的输出格式 -->
+            <pattern>${log.pattern}</pattern>
+            <!-- 设置信息编码 -->
+            <charset>${log.encode}</charset>
+        </encoder>
+    </appender>
+
+    <!-- 文件输出策略设置 -->
+    <appender  name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.filePath}/server.log</file>
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+            <charset>${log.encode}</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 文件路径,定义了日志的切分方式——把每一天的日志归档到一个文件中,以防止日志填满整个磁盘空间 -->
+            <FileNamePattern>${log.filePath}/server.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <!-- 只保留最近n天的日志 -->
+            <maxHistory>${log.maxHistory}</maxHistory>
+            <!--用来指定日志文件的上限大小，那么到了这个值，就会删除旧的日志-->
+            <totalSizeCap>${log.maxSize}</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <logger name="org.springframework" level="TRACE" additivity="false">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
+    </logger>
+
+    <!-- 根Logger节点，最顶级-->
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
+    </root>
+
+</configuration>
