@@ -3,6 +3,7 @@ package win.elegentjs.spring.ioc;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import win.elegentjs.spring.ioc.compos.MyComponent;
 import win.elegentjs.spring.ioc.config.PersonConfig;
 import win.elegentjs.spring.util.ArraysUtil;
 
@@ -17,6 +18,11 @@ public class AnnotationComponentScanSample {
 
         String[] beanDefinitions = context.getBeanDefinitionNames();
         log.info("beanDefinitions: {}", ArraysUtil.toString(beanDefinitions));
+
+        MyComponent myComponent = context.getBean("myComponent", MyComponent.class);
+
+        System.out.println(myComponent);
+
 
     }
 }
