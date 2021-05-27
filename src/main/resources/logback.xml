@@ -54,7 +54,7 @@
         </rollingPolicy>
     </appender>
 
-    <logger name="org.springframework" level="TRACE" additivity="false">
+    <logger name="org.springframework" level="DEBUG" additivity="false">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="FILE" />
     </logger>
