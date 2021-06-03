@@ -1,24 +1,22 @@
-package win.elegentjs.spring.ioc.resource.bytearray;
+package win.elegentjs.spring.ioc.resource;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import win.elegentjs.spring.util.FileUtil;
 
 import java.io.IOException;
 
 
 /**
- * 演示ByteArrayResource的使用
- *
- * 读取ByteArrayResource资源并打印出来
- *
+ * 演示FileSystemResource的使用
  */
 @Slf4j
-public class ByteArrayResourceSample {
+public class FileSystemResourceSample {
 
     public static void main(String[] args) throws IOException {
-        Resource resource = new ByteArrayResource("hello world".getBytes());
+        Resource resource = new FileSystemResource("/Users/liupeijun/logs/nacos/config.log");
 
         log.info("==> resource.exists(): {}", resource.exists());
         log.info("==> resource.getDescription(): {}", resource.getDescription());
