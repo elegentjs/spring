@@ -12,6 +12,4 @@
         <property name="age" value="20"/>
     </bean>
 
-    <context:component-scan base-package="win.elegentjs" annotation-config="true"/>
-
    </beans>
